@@ -61,7 +61,8 @@ public class SecurityConfig {
                                 "/api/seafoods/types",
                                 "/api/seafoods",
                                 "/api/seafoods/collected",
-                                "/api/contents/youtube").permitAll()
+                                "/api/contents/youtube",
+                                "/api/contents/wave").permitAll()
                         .anyRequest().authenticated()
                 )
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))

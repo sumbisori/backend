@@ -41,7 +41,7 @@ public class YoutubeService {
     private final YouTube youtubeClient;
     private final CacheManager cacheManager;
 
-    @Value("${youtube.api-key}")
+    @Value("${api.key.youtube}")
     private String apiKey;
 
     @Scheduled(fixedRate = 3600000) // 1시간마다 실행 (밀리초 기준)
@@ -57,7 +57,7 @@ public class YoutubeService {
                 .toList();
         cacheManager.getCache(CacheType.YOUTUBES.getCacheName()).put(SimpleKey.EMPTY, youtubeResponses);
         youtubeUpdateService.update(youtubeResponses);
-        log.info("YouTube API에서 데이터를 가져와 캐시에 저장했습니다.");
+        log.debug("YouTube API에서 데이터를 가져와 캐시에 저장했습니다.");
     }
 
     private Map<String, BigInteger> getVideoViews(List<SearchResult> youtubeList) {

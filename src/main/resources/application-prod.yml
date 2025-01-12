@@ -80,8 +80,11 @@ custom:
     kakao:
       admin-key: ${KAKAO_ADMIN_KEY}
       logout-uri: https://kauth.kakao.com/oauth/logout?client_id=${spring.security.oauth2.client.registration.kakao.client-id}&logout_redirect_uri=${server.url}/api/users/logout
-youtube:
-  api-key: ${YOUTUBE_API_KEY}
+
+api:
+  key:
+    youtube: ${YOUTUBE_API_KEY}
+    wave: ${WAVE_API_KEY}
 
 management:
   endpoints:

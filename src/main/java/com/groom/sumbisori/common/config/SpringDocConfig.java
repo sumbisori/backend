@@ -1,10 +1,12 @@
 package com.groom.sumbisori.common.config;
 
 import com.groom.sumbisori.common.springdoc.ApiExceptionExplainParser;
+import com.groom.sumbisori.common.util.StringCaseConverter;
+import com.groom.sumbisori.domain.content.entity.Spot;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.info.Info;
-import io.swagger.v3.oas.models.servers.Server;
+import java.util.Arrays;
 import org.springdoc.core.customizers.OpenApiCustomizer;
 import org.springdoc.core.customizers.OperationCustomizer;
 import org.springframework.context.annotation.Bean;
@@ -59,5 +61,37 @@ public class SpringDocConfig {
                     }
                 })
         );
+    }
+
+    @Bean
+    public OperationCustomizer enumCustomizer() {
+        return (operation, handlerMethod) -> {
+            if (operation.getParameters() == null) {
+                return operation;
+            }
+
+            operation.getParameters().forEach(parameter -> {
+                if (!"spot".equals(parameter.getName()) || parameter.getSchema() == null) {
+                    return;
+                }
+
+                // Enum 값 리스트 설정
+                parameter.getSchema().setEnum(
+                        Arrays.stream(Spot.values())
+                                .map(spot -> StringCaseConverter.toLowerCaseWithHyphens(spot.name()))
+                                .toList()
+                );
+
+                // 기본값 변환 및 설정
+                Object defaultValue = parameter.getSchema().getDefault();
+                if (defaultValue != null) {
+                    parameter.getSchema().setDefault(
+                            StringCaseConverter.toLowerCaseWithHyphens(defaultValue.toString())
+                    );
+                }
+            });
+
+            return operation;
+        };
     }
 }
