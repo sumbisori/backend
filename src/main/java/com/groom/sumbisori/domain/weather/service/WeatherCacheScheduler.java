@@ -1,4 +1,4 @@
-package com.groom.sumbisori.domain.wave.service;
+package com.groom.sumbisori.domain.weather.service;
 
 import com.groom.sumbisori.domain.content.entity.Spot;
 import lombok.RequiredArgsConstructor;
@@ -13,20 +13,20 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @RequiredArgsConstructor
 @Profile("prod")
-public class WaveCacheScheduler implements ApplicationListener<ApplicationReadyEvent> {
-    private final WaveRefreshService waveRefreshService;
+public class WeatherCacheScheduler implements ApplicationListener<ApplicationReadyEvent> {
+    private final WeatherRefreshService weatherRefreshService;
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
-        log.info("Initializing wave info for all spots");
+        log.info("Initializing weather info for all spots");
         refreshAllSpots();
     }
 
-    @Scheduled(cron = "0 1,31 * * * ?")
+    @Scheduled(cron = "0 0 * * * ?") // 정각마다 실행
     public void refreshAllSpots() {
-        log.info("Refreshing wave info for all spots at 1 and 31 minutes past the hour");
+        log.info("Refreshing weather info for all spots started");
         for (Spot spot : Spot.values()) {
-            waveRefreshService.refresh(spot);
+            weatherRefreshService.refresh(spot);
         }
     }
 }

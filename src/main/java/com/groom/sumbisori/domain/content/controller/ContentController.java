@@ -5,6 +5,8 @@ import com.groom.sumbisori.domain.content.entity.Spot;
 import com.groom.sumbisori.domain.content.service.YoutubeRandomPicker;
 import com.groom.sumbisori.domain.wave.dto.WaveResponse;
 import com.groom.sumbisori.domain.wave.service.WaveLookupService;
+import com.groom.sumbisori.domain.weather.dto.WeatherResponse;
+import com.groom.sumbisori.domain.weather.service.WeatherLookupService;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import java.util.List;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ContentController implements ContentApi {
     private final YoutubeRandomPicker youtubeRandomPicker;
     private final WaveLookupService waveLookupService;
+    private final WeatherLookupService weatherLookupService;
 
     @Override
     @GetMapping("/youtube")
@@ -35,5 +38,11 @@ public class ContentController implements ContentApi {
     @GetMapping("/wave")
     public ResponseEntity<WaveResponse> getWaveInfo(@RequestParam(defaultValue = "jeju-harbor") Spot spot) {
         return ResponseEntity.ok(waveLookupService.lookup(spot));
+    }
+
+    @Override
+    @GetMapping("/weather")
+    public ResponseEntity<WeatherResponse> getWeatherInfo(@RequestParam(defaultValue = "jeju-harbor") Spot spot) {
+        return ResponseEntity.ok(weatherLookupService.lookup(spot));
     }
 }

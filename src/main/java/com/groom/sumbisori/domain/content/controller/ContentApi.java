@@ -8,6 +8,7 @@ import com.groom.sumbisori.common.springdoc.ApiResponseExplanations;
 import com.groom.sumbisori.domain.content.dto.response.YoutubeResponse;
 import com.groom.sumbisori.domain.content.entity.Spot;
 import com.groom.sumbisori.domain.wave.dto.WaveResponse;
+import com.groom.sumbisori.domain.weather.dto.WeatherResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,4 +33,14 @@ public interface ContentApi {
     )
     ResponseEntity<WaveResponse> getWaveInfo(
             @RequestParam(defaultValue = "jeju-harbor") Spot spot);
+
+    @Operation(summary = "날씨 정보 조회")
+    @ApiResponseExplanations(
+            errors = {
+                    @ApiExceptionExplanation(value = GlobalErrorCode.class, constant = EXTERNAL_API_ERROR, name = "외부 api 호출 실패"),
+            }
+    )
+    ResponseEntity<WeatherResponse> getWeatherInfo(
+            @RequestParam(defaultValue = "jeju-harbor") Spot spot);
+
 }

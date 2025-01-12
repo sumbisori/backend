@@ -85,6 +85,7 @@ api:
   key:
     youtube: ${YOUTUBE_API_KEY}
     wave: ${WAVE_API_KEY}
+    weather: ${WEATHER_API_KEY}
 
 management:
   endpoints:

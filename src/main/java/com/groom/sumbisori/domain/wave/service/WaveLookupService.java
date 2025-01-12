@@ -12,7 +12,7 @@ public class WaveLookupService {
     private final WaveApiClient waveApiClient;
     private final WaveResponseParser waveResponseParser;
 
-    @Cacheable(value = "waves", key = "#spot.spotId")
+    @Cacheable(value = "waves", key = "#spot")
     public WaveResponse lookup(Spot spot) {
         String response = waveApiClient.fetch(spot);
         WaveResponse waveResponse = waveResponseParser.parse(response, spot);

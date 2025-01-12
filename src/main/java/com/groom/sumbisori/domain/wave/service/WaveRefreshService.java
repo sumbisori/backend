@@ -25,6 +25,6 @@ public class WaveRefreshService {
     public void refresh(Spot spot) {
         String response = waveApiClient.fetch(spot);
         WaveResponse waveResponse = waveResponseParser.parse(response, spot);
-        cacheManager.getCache(WAVES.getCacheName()).put(spot.getSpotId(), waveResponse);
+        cacheManager.getCache(WAVES.getCacheName()).put(spot, waveResponse);
     }
 }
